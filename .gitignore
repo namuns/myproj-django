@@ -2,5 +2,5 @@ venv
 .idea
 .vscode
 __pycache__
-db.sqllite3
 media
+db.sqlite3
