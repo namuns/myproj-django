@@ -1,8 +1,13 @@
 from rest_framework import serializers
-from library.models import Library
+from library.models import Book
 
 
-class LibrarySerializers(serializers.ModelSerializer):
+class BookSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Library
+        model = Book
         fields = "__all__"
+
+        import re
+        from rest_framework import serializers
+        from news.models import Article
+

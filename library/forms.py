@@ -1,8 +1,8 @@
 from django import forms
-from library.models import Library
+from library.models import Book
 
 
-class LibraryForm(forms.ModelForm):
+class BookForm(forms.ModelForm):
     class Meta:
-        model = Library
+        model = Book
         fields = "__all__"
