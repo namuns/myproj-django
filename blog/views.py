@@ -1,24 +1,24 @@
-from django.urls import reverse_lazy
-from django.views.generic import ListView, CreateView
 from rest_framework import viewsets
-
-from blog.forms import PostForm
-from blog.serializers import PostSerializer
+from blog.serializers import PostSerializers
 from blog.models import Post
-from rest_framework import viewsets
-
-post_list = ListView.as_view(model=Post)
-
-post_create = CreateView.as_view(
-    model=Post,
-    form_class=PostForm,
-    success_url=reverse_lazy("blog:post_create"),
-)
-
-# blog_edit = UpdateView.as_view()
-
+import json
+from django.http import HttpResponse
 
 
 class PostViewSet(viewsets.ModelViewSet):
     queryset = Post.objects.all()
-    serializer_class = PostSerializer
+    serializer_class = PostSerializers
+
+
+def post_list(request):
+    qs = Post.objects.all()
+    data = [
+            {
+                "id": post.id,
+                "title": post.title,
+                "content": post.content,
+            }
+            for post in qs
+        ]
+    json_string = json.dumps(data)
+    return HttpResponse(json_string)
