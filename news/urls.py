@@ -1,14 +1,13 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-from blog import views
-from blog.views import PostViewSet
+from news import views
 
-app_name = "blog"
+app_name = "news"
 
 router = DefaultRouter()
-router.register("posts", PostViewSet)
+router.register("articles", views.ArticleViewSet)
 
 urlpatterns = [
     path("api/", include(router.urls)),
-    path("posts.json", views.post_list),
+    # path("articles.json", views.article_list),
 ]

@@ -1,14 +1,13 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-from blog import views
-from blog.views import PostViewSet
-
-app_name = "blog"
+from library import views
+from library.views import BookViewSet
+app_name = "library"
 
 router = DefaultRouter()
-router.register("posts", PostViewSet)
+router.register("books", BookViewSet)
 
 urlpatterns = [
     path("api/", include(router.urls)),
-    path("posts.json", views.post_list),
+    # path("book.json", views.book_list),
 ]
