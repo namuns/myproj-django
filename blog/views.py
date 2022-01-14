@@ -1,5 +1,5 @@
 from rest_framework import viewsets
-from blog.serializers import PostSerializers
+from blog.serializers import PostSerializer
 from blog.models import Post
 import json
 from django.http import HttpResponse
@@ -7,7 +7,7 @@ from django.http import HttpResponse
 
 class PostViewSet(viewsets.ModelViewSet):
     queryset = Post.objects.all()
-    serializer_class = PostSerializers
+    serializer_class = PostSerializer
 
 
 def post_list(request):
