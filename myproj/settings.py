@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/3.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
-
+from datetime import timedelta
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -38,16 +38,13 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'shop',
-    'corsheaders',
-<<<<<<< HEAD
-    'rest_framework',
-    'rest_framework_simplejwt',
-
-=======
     'blog',
     'news',
     'library',
->>>>>>> 10bff009fa8e38ac63b0f765511f65b6a8872f71
+    'corsheaders',
+    'rest_framework',
+    'rest_framework_simplejwt',
+    'accounts',
 ]
 
 MIDDLEWARE = [
@@ -150,4 +147,7 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.SessionAuthentication',
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ],
+    # 디폴트 만료시간 :5분
+    'ACCESS_TOKEN_LIFETIME': timedelta(days=7),
 }
+
