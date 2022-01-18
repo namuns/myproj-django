@@ -11,7 +11,20 @@ from news.serializers import ArticleSerializer
 class ArticleViewSet(ModelViewSet):
     queryset = Article.objects.all()
     serializer_class = ArticleSerializer
-    permission_classes = [IsAuthenticated]
+    # permission_classes = [IsAuthenticated]
+
+    def get_permissions(self):
+        # if self.request.method in ("POST", "PUT", "PATCH", "DELETE")
+        if self.request.method == "GET":
+            return [AllowAny()]
+        return [IsAuthenticated()]
+
+    # 유효성 검사가 끝나고나서 실제 serializer.save()를 할 때 수행되는 함수
+    def perform_create(self, serializer):
+        # serializer.save는 commitFlase를 지원하지않지만 키워드 인자를 통한 속성지원을 지원함.
+        serializer.save(author=self.request.user)
+
+
 
     # def get_serializer_class(self):
     #     # return ArticleAnonymousSerializer
