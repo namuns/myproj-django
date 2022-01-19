@@ -9,6 +9,7 @@ from rest_framework_simplejwt.serializers import (
 
 User = get_user_model()
 
+
 class UserCreationSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True, required=True, validators=[validate_password])
     password2 = serializers.CharField(write_only=True, required=True)
@@ -17,33 +18,31 @@ class UserCreationSerializer(serializers.ModelSerializer):
         model = User
         fields = ["username", "password", "password2"]
 
-        def validate(self, attrs):
-            if attrs["password"] != attrs["password2"]:
-                raise serializers.ValidationError("동일한 암호를 지정해 주세요.")
-            return attrs
+    def validate(self, attrs):
+        if attrs["password"] != attrs["password2"]:
+            raise serializers.ValidationError("동일한 암호를 지정해 주세요.")
+        return attrs
 
-        def create(self, validated_data):
-            # 리턴 : 생성된 User 모델 인스턴스
-            username = validated_data["username"]
-            password = validated_data["password"]
-
-            new_user = User(username=username)
-            new_user.set_password(password)
-            new_user.save()
-
-            return new_user
+    def create(self, validated_data):
+        # 리턴 : 생성된 User 모델 인스턴스
+        username = validated_data["username"]
+        password = validated_data["password"]
+        new_user = User(username=username)
+        new_user.set_password(password)
+        new_user.save()
+        return new_user
 
 
 class TokenObtainPairSerializer(OrigTokenObtainPairSerializer):
 
-        # access/refresh 속성 외에 추가 속성
-        def validate(self, attrs):
-            data = super().validate(attrs)
-            data["username"] = self.user.username
-            data["first_name"] = self.user.first_name
-            data["last_name"] = self.user.last_name
-            # TODO: 프로필 이미지 URL
-            return data
+    # access/refresh 속성 외에 추가 속성
+    def validate(self, attrs):
+        data = super().validate(attrs)
+        data["username"] = self.user.username
+        data["first_name"] = self.user.first_name
+        data["last_name"] = self.user.last_name
+        # TODO: 프로필 이미지 URL
+        return data
 
 # JWT Payload 커스텀
     # @classmethod
